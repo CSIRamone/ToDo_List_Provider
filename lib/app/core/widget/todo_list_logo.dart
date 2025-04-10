@@ -13,7 +13,7 @@ class TodoListLogo extends StatelessWidget {
           'assets/list-hand-drawn-black-color-modern-calligraphy-phrase_218179-1684.jpg.avif',
           height: 200,
         ),
-        Text('Todo List', style: context.textTheme.headlineLarge),
+        //Text('Todo List', style: context.textTheme.headlineLarge),
       ],
     );
   }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:todo_list_provider/app/core/widget/todo_list_field.dart';
 import 'package:todo_list_provider/app/core/widget/todo_list_logo.dart';
 
 // A classe LoginPage é um widget sem estado (StatelessWidget).
@@ -38,9 +39,9 @@ class LoginPage extends StatelessWidget {
                       child: Form(
                         child: Column(
                           children: [
-                            TextFormField(),
+                            TodoListField(label: 'E-mail'),
                             SizedBox(height: 20),
-                            TextFormField(),
+                            TodoListField(label: 'Senha', obscureText: true),
                             SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
