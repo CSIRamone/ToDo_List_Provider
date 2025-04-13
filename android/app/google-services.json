@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "589468369544",
+    "project_id": "todo-list-provider-csi",
+    "storage_bucket": "todo-list-provider-csi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589468369544:android:72760e58e40933d316d53d",
+        "android_client_info": {
+          "package_name": "com.csiramone.todo_list_provider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589468369544-shhrns1sh6k5cp654ft4joc577luqgfp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA3llxH7Ar5To0bhXDjOsbJcNIyWoyjOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589468369544-shhrns1sh6k5cp654ft4joc577luqgfp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "589468369544-r2fl89ulmnpvbuu7g8j4hhf073gqvcml.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.csiramone.todoListProvider"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

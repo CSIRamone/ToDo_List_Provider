@@ -101,7 +101,10 @@ class LoginPage extends StatelessWidget {
                                children: [
                                 Text('Não tem uma conta?'),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/register');
+                                    // Navega para a página de registro quando o botão é pressionado.
+                                  },
                                   child: Text('Cadastre-se'),
                                 ),
                                ], 
