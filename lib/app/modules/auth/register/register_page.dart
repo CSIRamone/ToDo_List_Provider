@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_provider/app/core/notifier/todolist_default_listener_notifier.dart';
 import 'package:todo_list_provider/app/core/ui/theme.extensions.dart';
 import 'package:todo_list_provider/app/core/widget/todo_list_field.dart';
 import 'package:todo_list_provider/app/core/widget/todo_list_logo.dart';
@@ -24,28 +25,35 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailEC.dispose();
     _passwordEC.dispose();
     _confirmPasswordEC.dispose();
-    context.read<RegisterController>().removeListener((){});
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    context.read<RegisterController>().addListener((){
-      final controller = context.read<RegisterController>();
-      final success = controller.success;
-      final error = controller.error;
-      if(success){
-        Navigator.of(context).pop();
-      }else if (error != null && error.isNotEmpty){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    });
+    TodolistDefaultListenerNotifier(
+      changeNotifier: context.read<RegisterController>(),
+    ).listener(context: context, successCallback: (notifier, listenerInstace) {
+      listenerInstace.dispose();
+      Navigator.of(context).pop();
+    },
+    errorCallback: (notifier, listenerIntance) => print('deu RUIM !!!!!'));
+
+    //context.read<RegisterController>().addListener((){
+      //final controller = context.read<RegisterController>();
+     // final success = controller.success;
+    //  final error = controller.error;
+    //  if(success){
+    //    Navigator.of(context).pop();
+     // }else if (error != null && error.isNotEmpty){
+      //  ScaffoldMessenger.of(context).showSnackBar(
+       //   SnackBar(
+      //      content: Text(error),
+      //      backgroundColor: Colors.red,
+      //    ),
+      //  );
+     // }
+    //});
     // Initialize any necessary data or state here
   }
 
