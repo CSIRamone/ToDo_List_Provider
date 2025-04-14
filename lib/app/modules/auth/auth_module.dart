@@ -18,7 +18,7 @@ class AuthModule extends TodoListModule {
             // Isso permite que o LoginController seja acessado pelos widgets filhos
             // e notifique-os sobre mudanças no estado.
             ChangeNotifierProvider(
-              create: (context) => LoginController(),
+              create: (context) => LoginController(userService: context.read()),
             ),
             ChangeNotifierProvider(
               create: (context) => RegisterController(userService: context.read()),

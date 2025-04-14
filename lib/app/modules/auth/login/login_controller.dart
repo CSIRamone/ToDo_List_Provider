@@ -1,8 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_list_provider/app/core/notifier/todolist_default_change_notifier.dart';
+import 'package:todo_list_provider/app/repositories/exception/auth_exception.dart';
+import 'package:todo_list_provider/app/services/user/user_service.dart';
 
 // A classe LoginController é responsável por gerenciar o estado relacionado à página de login.
 // Ela estende ChangeNotifier, o que permite notificar os widgets ouvintes sobre mudanças no estado.
-class LoginController extends ChangeNotifier{}
+class LoginController extends TodolistDefaultChangeNotifier {
+  final UserService _userService;
+
+  LoginController({required UserService userService})
+      : _userService = userService;
+
+  Future<void> login(String email, String password) async {
+    try {
+  showLoadingAndResetState();
+  notifyListeners();
+  final user = await _userService.login(email, password);
+  if (user != null) {
+    // Handle successful login (e.g., navigate to another screen)
+    success();
+  } else {
+    // Handle login error (e.g., show error message)
+    setError('Login failed');
+  }
+} on AuthException catch (e) {
+  setError(e.message);
+} finally {
+  hideLoading();
+  notifyListeners();
+}
+    
+  }
+}
   // Atualmente, a classe está vazia, mas pode ser usada para adicionar lógica de autenticação,
   // validação de formulário, ou qualquer outra funcionalidade relacionada ao login.
 
