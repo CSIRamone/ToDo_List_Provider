@@ -8,6 +8,7 @@ class TodoListField extends StatelessWidget {
   final ValueNotifier<bool> isObscureTextValueNotifier;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
   // O ValueNotifier é uma classe que notifica os ouvintes quando o valor muda.
   // Ele é usado para gerenciar o estado de forma reativa.
   // Isso significa que, quando o valor muda, os widgets que estão ouvindo essa mudança podem ser atualizados automaticamente.
@@ -28,6 +29,7 @@ class TodoListField extends StatelessWidget {
     this.suffixIconButton,
     this.controller,
     this.validator,
+    this.focusNode,
   })  : assert(obscureText == true ? suffixIconButton == null : true,
             'obscureText não pode ser enviado em conjunto com o suffixIconButton'),
         isObscureTextValueNotifier = ValueNotifier(obscureText),
@@ -55,6 +57,7 @@ class TodoListField extends StatelessWidget {
         return TextFormField(
           controller: controller,
           validator: validator,
+          focusNode: focusNode,
           decoration: InputDecoration(
             labelText: label,
             labelStyle: const TextStyle(
