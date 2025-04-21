@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordEC = TextEditingController();
   final _emailEC = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _emailFocus = FocusNode();  
+  final _emailFocus = FocusNode();
 
   @override
   void initState() {
@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
     ).listener(
       context: context,
       everCallback: (notifier, listenerIntance) {
-        if (notifier is LoginController){
-          if(notifier.hasInfo) {
+        if (notifier is LoginController) {
+          if (notifier.hasInfo) {
             Messages.of(context).showInfo(notifier.infoMessage!);
           }
         }
@@ -105,13 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 TextButton(
                                   onPressed: () {
-                                    if(_emailEC.text.isNotEmpty) {
+                                    if (_emailEC.text.isNotEmpty) {
                                       context
                                           .read<LoginController>()
                                           .forgotPassword(_emailEC.text);
                                     } else {
                                       _emailFocus.requestFocus();
-                                      Messages.of(context).showError('Por favor, insira seu e-mail.');
+                                      Messages.of(context).showError(
+                                          'Por favor, insira seu e-mail.');
                                     }
                                   },
                                   child: Text('Esqueceu sua senha?'),
@@ -163,8 +164,13 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(
                                 height: 30,
                               ),
-                              SignInButton(Buttons.Google,
-                                  onPressed: () {},
+                              SignInButton(Buttons.Google, onPressed: () {
+                                context.read<LoginController>().googleLogin();
+                                // Chama o método googleLogin do controlador de login
+                                // para iniciar o processo de login com o Google.
+                                // O controlador deve ser responsável por lidar com a autenticação do Google.
+                                // Isso pode incluir a exibição de uma tela de carregamento,
+                              },
                                   text: 'Continue com o Google',
                                   padding: const EdgeInsets.all(5),
                                   shape: OutlineInputBorder(

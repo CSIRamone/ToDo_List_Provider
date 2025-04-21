@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_provider/app/core/database/sqlite_adm_connection.dart';
+import 'package:todo_list_provider/app/core/navigator/todo_list_navigator.dart';
 import 'package:todo_list_provider/app/core/ui/todo_list_ui_config.dart';
 import 'package:todo_list_provider/app/modules/auth/auth_module.dart';
+import 'package:todo_list_provider/app/modules/home/home_module.dart';
 import 'package:todo_list_provider/app/modules/splash/splash_page.dart';
 
 // A classe AppWidget é o ponto de entrada principal do aplicativo.
@@ -41,12 +43,14 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'Todo List Provider',
 
       // Define a rota inicial do aplicativo como '/login'.
-      initialRoute: '/login',
+    
       theme: TodoListUiConfig.theme,
+      navigatorKey: TodoListNavigator.navigatorKey,
 
       // Define as rotas do aplicativo. Aqui, as rotas são obtidas do AuthModule.
       routes: {
-        ...AuthModule().routers, // Usa o operador spread para adicionar as rotas definidas no AuthModule.
+        ...AuthModule().routers, 
+        ...HomeModule().routers,// Usa o operador spread para adicionar as rotas definidas no AuthModule.
       },
 
       // Define a página inicial como SplashPage. Essa página geralmente é usada para exibir uma tela de carregamento inicial.
