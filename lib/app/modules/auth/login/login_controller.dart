@@ -25,12 +25,12 @@ class LoginController extends TodolistDefaultChangeNotifier {
         // Handle successful login (e.g., navigate to another screen)
         success();
       } else {
-        _userService.googlelogout();
+        _userService.logout();
         // Handle login error (e.g., show error message)
         setError('Erro ao realizar login com o Google');
       }
     } on AuthException catch (e) {
-      _userService.googlelogout();
+      _userService.logout();
       setError(e.message);
     } finally {
       hideLoading();

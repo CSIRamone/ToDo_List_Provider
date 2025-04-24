@@ -4,6 +4,7 @@ import 'package:todo_list_provider/app/core/navigator/todo_list_navigator.dart';
 import 'package:todo_list_provider/app/core/ui/todo_list_ui_config.dart';
 import 'package:todo_list_provider/app/modules/auth/auth_module.dart';
 import 'package:todo_list_provider/app/modules/home/home_module.dart';
+import 'package:todo_list_provider/app/modules/home/home_page.dart';
 import 'package:todo_list_provider/app/modules/splash/splash_page.dart';
 
 // A classe AppWidget é o ponto de entrada principal do aplicativo.
@@ -49,6 +50,7 @@ class _AppWidgetState extends State<AppWidget> {
 
       // Define as rotas do aplicativo. Aqui, as rotas são obtidas do AuthModule.
       routes: {
+        
         ...AuthModule().routers, 
         ...HomeModule().routers,// Usa o operador spread para adicionar as rotas definidas no AuthModule.
       },

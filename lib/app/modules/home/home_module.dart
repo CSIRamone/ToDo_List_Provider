@@ -8,6 +8,6 @@ class HomeModule extends TodoListModule{
     routers:{
       '/home': (context) => const HomePage(),
     }, 
-    bindings:[]);
+    );//bindings:[]
   
 }
