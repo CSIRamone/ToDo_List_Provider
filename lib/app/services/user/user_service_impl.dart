@@ -25,4 +25,9 @@ class UserServiceImpl implements UserService {
         
           @override
           Future<void> logout() => _userRepository.logout();
+          
+            @override
+            Future<void> updateDisplayName(String name) {
+              return _userRepository.updateDisplayName(name);
+            }
 }

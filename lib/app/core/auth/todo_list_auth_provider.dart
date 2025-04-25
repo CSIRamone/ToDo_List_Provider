@@ -17,7 +17,10 @@ class TodoListAuthProvider extends ChangeNotifier{
 
   Future<void> logout() => _userService.logout(); 
 
-  User? get user => _firebaseAuth.currentUser;
+  User? get user {
+   print('Usuário atual: ${_firebaseAuth.currentUser}');
+   return _firebaseAuth.currentUser;
+  }
   
   void loadListener() {
     _firebaseAuth.userChanges().listen((_) => notifyListeners());

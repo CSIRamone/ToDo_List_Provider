@@ -131,4 +131,15 @@ class UserRepositoryImpl implements UserRepository {
     await GoogleSignIn().signOut();
     _firebaseAuth.signOut();
   }
+  
+  @override
+  Future<void> updateDisplayName(String name) async {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      return await user.updateProfile(displayName: name);
+    } else {
+      throw AuthException(message: 'Usuario não encontrado!');
+    }
+     
+  }
 }
