@@ -6,6 +6,7 @@ import 'package:todo_list_provider/app/modules/auth/auth_module.dart';
 import 'package:todo_list_provider/app/modules/home/home_module.dart';
 import 'package:todo_list_provider/app/modules/home/home_page.dart';
 import 'package:todo_list_provider/app/modules/splash/splash_page.dart';
+import 'package:todo_list_provider/app/modules/tasks/tasks_module.dart';
 
 // A classe AppWidget é o ponto de entrada principal do aplicativo.
 // Ela é um StatefulWidget porque precisa gerenciar o estado do sqliteAdmConnection.
@@ -52,7 +53,8 @@ class _AppWidgetState extends State<AppWidget> {
       routes: {
         
         ...AuthModule().routers, 
-        ...HomeModule().routers,// Usa o operador spread para adicionar as rotas definidas no AuthModule.
+        ...HomeModule().routers,
+        ...TasksModule().routers, // Usa o operador spread para adicionar as rotas definidas no AuthModule.
       },
 
       // Define a página inicial como SplashPage. Essa página geralmente é usada para exibir uma tela de carregamento inicial.

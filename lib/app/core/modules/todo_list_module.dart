@@ -26,9 +26,20 @@ abstract class TodoListModule {
     return _routers.map((key, pageBuilder) => MapEntry(
           key, // Chave da rota (ex.: '/login').
           (_) => TodoListPage(
-                bindings: _bindings, // Injeta as dependências no TodoListPage.
-                page: pageBuilder, // Define a página associada à rota.
-              ),
+            bindings: _bindings, // Injeta as dependências no TodoListPage.
+            page: pageBuilder, // Define a página associada à rota.
+          ),
         ));
+  }
+
+  Widget getPage(String path, BuildContext context) {
+    final widgetBuilder = _routers[path];
+    if (widgetBuilder != null) {
+      return TodoListPage(
+        page: widgetBuilder,
+        bindings: _bindings,
+      );
+    }
+    throw Exception('Route not found: $path');
   }
 }
