@@ -1,39 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_provider/app/core/ui/theme.extensions.dart';
+import 'package:todo_list_provider/app/models/task_filter_enum.dart';
+import 'package:todo_list_provider/app/models/total_tasks.model.dart';
+import 'package:todo_list_provider/app/modules/home/widget/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/widget/todo_card.filter.dart';
 
-class HomeFilters extends StatefulWidget {
-
-  const HomeFilters({ Key? key }) : super(key: key);
+class HomeFilters extends StatelessWidget {
+  const HomeFilters({Key? key}) : super(key: key);
 
   @override
-  State<HomeFilters> createState() => _HomeFiltersState();
-}
-
-class _HomeFiltersState extends State<HomeFilters> {
-   @override
-   Widget build(BuildContext context) {
-       return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('FILTROS', style: context.titleStyle,
-          ),
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'FILTROS',
+          style: context.titleStyle,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              TodoCardFilter(),
-              TodoCardFilter(),
-              TodoCardFilter(),
-              TodoCardFilter(),
-              TodoCardFilter(),
-              TodoCardFilter(),
-              TodoCardFilter(),
-              
-          ],),
+              TodoCardFilter(
+                label: 'HOJE',
+                selected: context.select<HomeController, TaskFilterEnum>(
+                  (value) => value.filterSelected) == TaskFilterEnum.today,
+                taskFilterEnum: TaskFilterEnum.today,
+                totalTasksModel: TotalTasksModel(totalTasks: 30, totalTasksFinish: 20),
+              ),
+              TodoCardFilter(
+                label: 'AMANHÃ',
+                selected: context.select<HomeController, TaskFilterEnum>(
+                  (value) => value.filterSelected) == TaskFilterEnum.tomorrow,
+                taskFilterEnum: TaskFilterEnum.tomorrow,
+                totalTasksModel: TotalTasksModel(totalTasks: 25, totalTasksFinish: 5),
+              ),
+              TodoCardFilter(
+                label: 'SEMANA',
+                selected: context.select<HomeController, TaskFilterEnum>(
+                  (value) => value.filterSelected) == TaskFilterEnum.week,
+                taskFilterEnum: TaskFilterEnum.week,
+                totalTasksModel: TotalTasksModel(totalTasks: 40, totalTasksFinish: 5),
+              )
+            ],
+          ),
         ),
-        ],
-
-       );
+      ],
+    );
   }
 }
