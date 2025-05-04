@@ -35,7 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
       changeNotifier: context.read<RegisterController>(),
     ).listener(context: context, successCallback: (notifier, listenerInstace) {
       listenerInstace.dispose();
-      Navigator.of(context).pop();
+      //removido devido a auteracao no todo_list_auth_provider 
+      //Navigator.of(context).pop();
     },
     errorCallback: (notifier, listenerIntance) => print('deu RUIM !!!!!'));
 
