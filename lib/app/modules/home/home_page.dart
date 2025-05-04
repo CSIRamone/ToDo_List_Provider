@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_provider/app/core/ui/theme.extensions.dart';
 import 'package:todo_list_provider/app/core/ui/todolisticon_icons.dart';
+import 'package:todo_list_provider/app/modules/home/widget/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_drawer.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_filters.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_header.dart';
@@ -11,8 +12,24 @@ import 'package:todo_list_provider/app/modules/tasks/tasks_create_controller.dar
 import 'package:todo_list_provider/app/modules/tasks/tasks_create_page.dart';
 import 'package:todo_list_provider/app/modules/tasks/tasks_module.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final HomeController _homeController;
+  
+  const HomePage({super.key, required HomeController homeController})
+      : _homeController = homeController;
+
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    widget._homeController.loadTotalTasks();
+    super.initState();
+  }
 
   void _goToCreateTask(BuildContext context) {
     //Navigator.of(context).pushNamed('/tasks/create');

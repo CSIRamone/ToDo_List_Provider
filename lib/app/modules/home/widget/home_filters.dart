@@ -27,21 +27,24 @@ class HomeFilters extends StatelessWidget {
                 selected: context.select<HomeController, TaskFilterEnum>(
                   (value) => value.filterSelected) == TaskFilterEnum.today,
                 taskFilterEnum: TaskFilterEnum.today,
-                totalTasksModel: TotalTasksModel(totalTasks: 30, totalTasksFinish: 20),
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.todayTasksModel),
               ),
               TodoCardFilter(
                 label: 'AMANHÃ',
                 selected: context.select<HomeController, TaskFilterEnum>(
                   (value) => value.filterSelected) == TaskFilterEnum.tomorrow,
                 taskFilterEnum: TaskFilterEnum.tomorrow,
-                totalTasksModel: TotalTasksModel(totalTasks: 25, totalTasksFinish: 5),
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.tomorrowTasksModel),
               ),
               TodoCardFilter(
                 label: 'SEMANA',
                 selected: context.select<HomeController, TaskFilterEnum>(
                   (value) => value.filterSelected) == TaskFilterEnum.week,
                 taskFilterEnum: TaskFilterEnum.week,
-                totalTasksModel: TotalTasksModel(totalTasks: 40, totalTasksFinish: 5),
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.weekTasksModel),
               )
             ],
           ),
