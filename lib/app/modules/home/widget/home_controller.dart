@@ -19,6 +19,8 @@ class HomeController extends TodolistDefaultChangeNotifier {
   TotalTasksModel? weekTasksModel;
   List<TaskModel> allTasks = [];
   List<TaskModel> filteredTasks = [];
+  DateTime? initialDateWeek;
+  DateTime? selectedDay;
 
   Future<void> loadTotalTasks() async {
     final allTasks = await Future.wait([
@@ -62,12 +64,29 @@ class HomeController extends TodolistDefaultChangeNotifier {
         break;
       case TaskFilterEnum.week:
         final weekTasks = await _tasksService.getWeek();
+        initialDateWeek = weekTasks.startDate;
         tasks = weekTasks.tasks;
         break;
     }
     allTasks = tasks;
     filteredTasks = tasks;
+
+    if (filter == TaskFilterEnum.week) {
+      if(initialDateWeek != null) {
+        filterByDay(initialDateWeek!);
+      }
+    }
+
+
     hideLoading();
+    notifyListeners();
+  }
+
+  void filterByDay(DateTime date)  {
+    selectedDay = date;
+    filteredTasks = allTasks.where((task) {
+      return task.datetime.day == date.day;
+    }).toList();
     notifyListeners();
   }
 
