@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_provider/app/core/notifier/todolist_default_listener_notifier.dart';
 import 'package:todo_list_provider/app/core/ui/theme.extensions.dart';
 import 'package:todo_list_provider/app/core/ui/todolisticon_icons.dart';
+import 'package:todo_list_provider/app/models/task_filter_enum.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_drawer.dart';
 import 'package:todo_list_provider/app/modules/home/widget/home_filters.dart';
@@ -27,15 +29,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    widget._homeController.loadTotalTasks();
     super.initState();
+    TodolistDefaultListenerNotifier(changeNotifier: widget._homeController).listener(
+      context: context, 
+      successCallback: (notifier, listenerInstance) {
+        listenerInstance.dispose();
+       
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget._homeController.loadTotalTasks();
+      widget._homeController.findTasks(filter: TaskFilterEnum.today); 
+  });
   }
 
-  void _goToCreateTask(BuildContext context) {
+  Future<void> _goToCreateTask(BuildContext context) async {
     //Navigator.of(context).pushNamed('/tasks/create');
     //exemplo Navigator.of(context).push(MaterialPageRoute(
     //exemplo   builder: (_) => TasksModule().getPage('/tasks/create', context)));
-    Navigator.of(context).push(PageRouteBuilder(
+    await Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: Duration(milliseconds: 400),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         animation = CurvedAnimation(
@@ -51,6 +63,7 @@ class _HomePageState extends State<HomePage> {
       pageBuilder: (context, animation, secondaryAnimation) =>
           TasksModule().getPage('/tasks/create', context),
     ));
+    widget._homeController.refreshPage();
   }
 
   @override

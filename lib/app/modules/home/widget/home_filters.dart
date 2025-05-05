@@ -14,10 +14,15 @@ class HomeFilters extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         Text(
           'FILTROS',
           style: context.titleStyle,
         ),
+        const SizedBox(
+          height: 10,
+        ),
+      
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

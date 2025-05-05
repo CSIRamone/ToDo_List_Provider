@@ -6,7 +6,6 @@ import 'package:todo_list_provider/app/models/week_task_model.dart';
 import 'package:todo_list_provider/app/services/tasks/tasks_service.dart';
 
 class HomeController extends TodolistDefaultChangeNotifier {
-
   final TasksService _tasksService;
 
   HomeController({
@@ -18,7 +17,8 @@ class HomeController extends TodolistDefaultChangeNotifier {
   TotalTasksModel? todayTasksModel;
   TotalTasksModel? tomorrowTasksModel;
   TotalTasksModel? weekTasksModel;
-
+  List<TaskModel> allTasks = [];
+  List<TaskModel> filteredTasks = [];
 
   Future<void> loadTotalTasks() async {
     final allTasks = await Future.wait([
@@ -30,24 +30,51 @@ class HomeController extends TodolistDefaultChangeNotifier {
     final todayTasks = allTasks[0] as List<TaskModel>;
     final tomorrowTasks = allTasks[1] as List<TaskModel>;
     final weekTasks = allTasks[2] as WeekTaskModel;
-  
-  todayTasksModel = TotalTasksModel(
-    totalTasks: todayTasks.length,
-    totalTasksFinish: todayTasks.where((task) => task.finished).length,
-  );
-  tomorrowTasksModel = TotalTasksModel(
-    totalTasks: tomorrowTasks.length,
-    totalTasksFinish: tomorrowTasks.where((task) => task.finished).length,
-  );
-  weekTasksModel = TotalTasksModel(
-    totalTasks: weekTasks.tasks.length,
-    totalTasksFinish: weekTasks.tasks.where((task) => task.finished).length,
-  );
-  notifyListeners();  
 
-  
+    todayTasksModel = TotalTasksModel(
+      totalTasks: todayTasks.length,
+      totalTasksFinish: todayTasks.where((task) => task.finished).length,
+    );
+    tomorrowTasksModel = TotalTasksModel(
+      totalTasks: tomorrowTasks.length,
+      totalTasksFinish: tomorrowTasks.where((task) => task.finished).length,
+    );
+    weekTasksModel = TotalTasksModel(
+      totalTasks: weekTasks.tasks.length,
+      totalTasksFinish: weekTasks.tasks.where((task) => task.finished).length,
+    );
+    notifyListeners();
   }
 
-  
-  
+  Future<void> findTasks({required TaskFilterEnum filter}) async {
+    filterSelected = filter;
+    showLoading();
+    notifyListeners();
+
+    List<TaskModel> tasks = [];
+
+    switch (filter) {
+      case TaskFilterEnum.today:
+        tasks = await _tasksService.getToday();
+        break;
+      case TaskFilterEnum.tomorrow:
+        tasks = await _tasksService.getTomorrow();
+        break;
+      case TaskFilterEnum.week:
+        final weekTasks = await _tasksService.getWeek();
+        tasks = weekTasks.tasks;
+        break;
+    }
+    allTasks = tasks;
+    filteredTasks = tasks;
+    hideLoading();
+    notifyListeners();
+  }
+
+  Future<void> refreshPage() async {
+    await loadTotalTasks();
+    await findTasks(filter: filterSelected);
+    notifyListeners();
+  }
+
 }
