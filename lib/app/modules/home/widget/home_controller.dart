@@ -72,10 +72,15 @@ class HomeController extends TodolistDefaultChangeNotifier {
     filteredTasks = tasks;
 
     if (filter == TaskFilterEnum.week) {
-      if(initialDateWeek != null) {
+      if (selectedDay != null) {
+        filterByDay(selectedDay!);
+      } else if (initialDateWeek != null) {
         filterByDay(initialDateWeek!);
-      }
+      } 
+    }else{
+      selectedDay = null;
     }
+
 
 
     hideLoading();
