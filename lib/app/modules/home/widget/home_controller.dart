@@ -21,6 +21,7 @@ class HomeController extends TodolistDefaultChangeNotifier {
   List<TaskModel> filteredTasks = [];
   DateTime? initialDateWeek;
   DateTime? selectedDay;
+  bool showFinishingTasks = false;
 
   Future<void> loadTotalTasks() async {
     final allTasks = await Future.wait([
@@ -76,18 +77,20 @@ class HomeController extends TodolistDefaultChangeNotifier {
         filterByDay(selectedDay!);
       } else if (initialDateWeek != null) {
         filterByDay(initialDateWeek!);
-      } 
-    }else{
+      }
+    } else {
       selectedDay = null;
     }
 
-
-
+    if (!showFinishingTasks) {
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+   }
     hideLoading();
     notifyListeners();
+    
   }
 
-  void filterByDay(DateTime date)  {
+  void filterByDay(DateTime date) {
     selectedDay = date;
     filteredTasks = allTasks.where((task) {
       return task.datetime.day == date.day;
@@ -101,4 +104,27 @@ class HomeController extends TodolistDefaultChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> checkOrUncheck(TaskModel task) async {
+   try {
+    showLoadingAndResetState();
+    notifyListeners();
+
+    final taskUpdate = task.copyWith(finished: !task.finished);
+    await _tasksService.checkOrUncheck(taskUpdate);
+  } catch (e) {
+    print('Erro em checkOrUncheck: $e');
+  } finally {
+    hideLoading();
+    await refreshPage();
+  }
+   
+  }
+
+  void showOrHideFinishingTasks() {
+    showFinishingTasks = !showFinishingTasks;
+   
+    refreshPage();
+
+  }
+  
 }

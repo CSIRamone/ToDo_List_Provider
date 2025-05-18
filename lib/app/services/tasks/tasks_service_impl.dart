@@ -49,4 +49,7 @@ class TasksServiceImpl implements TasksService {
       endDate: endFilter, 
       tasks: tasks);
   }
+  
+  @override
+  Future<void> checkOrUncheck(TaskModel task) => _tasksRepository.checkOrUncheck(task);
 }

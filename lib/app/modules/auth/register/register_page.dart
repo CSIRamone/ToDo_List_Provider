@@ -8,7 +8,7 @@ import 'package:todo_list_provider/app/modules/auth/register/register_controller
 import 'package:validatorless/validatorless.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
